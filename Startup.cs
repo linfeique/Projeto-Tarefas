@@ -17,6 +17,8 @@ namespace Senai.Cadastro.Tarefas
         {
             services.AddMvc();
 
+            services.AddDistributedMemoryCache();
+
             services.AddSession(
                 options => options.IdleTimeout = TimeSpan.FromMinutes(30)
             );
@@ -29,6 +31,12 @@ namespace Senai.Cadastro.Tarefas
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSession();
+
+            app.UseStaticFiles();
+
+            app.UseMvc( rota => rota.MapRoute(name:"defaults", template:"{controller=Usuario}/{action=Cadastro}") );
 
             app.Run(async (context) =>
             {
