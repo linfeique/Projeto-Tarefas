@@ -36,7 +36,7 @@ namespace Senai.Cadastro.Tarefas
 
             app.UseStaticFiles();
 
-            app.UseMvc( rota => rota.MapRoute(name:"defaults", template:"{controller=Usuario}/{action=Cadastro}") );
+            app.UseMvc( rota => rota.MapRoute(name:"defaults", template:"{controller=Tarefa}/{action=Cadastrar}") );
 
             app.Run(async (context) =>
             {

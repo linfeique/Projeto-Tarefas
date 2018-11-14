@@ -6,18 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Senai.Cadastro.Tarefas.Models;
 using Senai.Cadastro.Tarefas.Repositorios;
 
-namespace Senai.Cadastro.Tarefas.Controllers
-{
-    public class UsuarioController : Controller
-    {
+namespace Senai.Cadastro.Tarefas.Controllers {
+    public class UsuarioController : Controller {
         [HttpGet]
-        public IActionResult Cadastro(){
+        public IActionResult Cadastro () {
 
-            return View();
+            return View ();
         }
 
         [HttpPost]
-        public IActionResult Cadastro(IFormCollection form){
+        public IActionResult Cadastro (IFormCollection form) {
             UsuarioModel usuarioModel = new UsuarioModel {
                 Nome = form["nome"],
                 Email = form["email"],
@@ -27,38 +25,37 @@ namespace Senai.Cadastro.Tarefas.Controllers
 
             usuarioModel.DataCriacao = DateTime.Now;
 
-            UsuarioRepositorio usuarioRap = new UsuarioRepositorio();
+            UsuarioRepositorio usuarioRap = new UsuarioRepositorio ();
 
-            List<UsuarioModel> lsUsuarios = usuarioRap.CarregarDoCSV();
+            List<UsuarioModel> lsUsuarios = usuarioRap.CarregarDoCSV ();
             usuarioModel.Id = lsUsuarios.Count + 1;
 
-            using(StreamWriter escrever = new StreamWriter("usuarios.csv", true)){
-                escrever.WriteLine($"{usuarioModel.Id};{usuarioModel.Nome};{usuarioModel.Email};{usuarioModel.Senha};{usuarioModel.Tipo};{usuarioModel.DataCriacao}");
+            using (StreamWriter escrever = new StreamWriter ("usuarios.csv", true)) {
+                escrever.WriteLine ($"{usuarioModel.Id};{usuarioModel.Nome};{usuarioModel.Email};{usuarioModel.Senha};{usuarioModel.Tipo};{usuarioModel.DataCriacao}");
             }
 
-            return View();
+            return View ();
         }
 
         [HttpGet]
 
-        public IActionResult Login() => View();
+        public IActionResult Login () => View ();
 
         [HttpPost]
 
-        public IActionResult Login(IFormCollection form){
-            UsuarioModel usuario = new UsuarioModel{
+        public IActionResult Login (IFormCollection form) {
+            UsuarioModel usuario = new UsuarioModel {
                 Email = form["email"],
                 Senha = form["senha"]
             };
 
-            UsuarioRepositorio usuarioRap = new UsuarioRepositorio();
-            UsuarioModel usuarioModel = usuarioRap.BuscarEmailSenha(usuario.Email, usuario.Senha);
+            UsuarioRepositorio usuarioRap = new UsuarioRepositorio ();
+            UsuarioModel usuarioModel = usuarioRap.BuscarEmailSenha (usuario.Email, usuario.Senha);
 
-            if(usuarioModel != null){
-                HttpContext.Session.SetString("idUsuario", usuarioModel.Id.ToString());
-
-                return ViewBag.Mensagem = "Acesso Ligado";
-            } else{
+            if (usuarioModel != null) {
+                HttpContext.Session.SetString ("idUsuario", usuarioModel.Id.ToString ());
+                return RedirectToAction("Cadastrar", "Tarefa");
+            } else {
                 return ViewBag.Mensagem = "Acesso Negado";
             }
         }
