@@ -1,16 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Projeto</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/css/style_index.css">
+	<link rel="shortcut icon" type="text/css" href="https://orig00.deviantart.net/e4ac/f/2016/147/2/0/f4sellout___custom_fallout_4_f4se_shortcut_icon_by_nzxvyy-da3zdb0.png">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+</head>
+<body>
 
-@ViewBag.Mensagem
 
-<form action="/Usuario/Login" method="POST">
-    <label>
-        Email:
-        <input type="email" name="email"> 
-    </label>
+	<div class="show-login-btn"><i class="fas fa-sign-in-alt"></i> Fazer Login </div>
+    <form class="login-form" action="/Usuario/Cadastrando" method="POST">
+        <h1>Cadastre-se</h1>
+        <input class="txtb" type="text" name="nome" placeholder="Name">
+        <input class="txtb" type="text" name="email" placeholder="Email">
+        <input class="txtb" type="password" name="senha" placeholder="Password">
+        <input class="txtb" type="text" name="tipo" placeholder="Type">
+        <input class="login-btn2" type="submit" value="Cadastrar">
+    </form>
 
-    <label>
-        Senha:
-        <input type="password" name="senha"> 
-    </label>
 
-    <button type="submit">Entrar</button>
-</form>
+	<div class="login-box">
+		<div class="alerta"><i class="fas fa-exclamation-circle"></i> O email ou a senha digitada estão incorretos </div>
+		<div class="hide-login-btn"><i class="fas fa-times"></i></div>
+		<form class="login-form" action="/Usuario/Login" method="POST">
+			<h1>Login</h1>
+			<input class="txtb" type="text" name="email_login" placeholder="Email">
+			<input class="txtb" type="password" name="senha_login" placeholder="Password">
+			<input class="login-btn" type="submit" value="Login">
+		</form>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+	<script type="text/javascript">
+		$(".show-login-btn").on("click", function() {
+			$(".login-box").toggleClass("showed");
+		});
+		
+		$(".hide-login-btn").on("click", function() {
+			$(".login-box").toggleClass("showed");
+		});
+
+		$(".login-btn").on("click", function mostrarAlerta() {
+			$(".alerta").toggleClass("mostrar-alerta");
+		});
+	</script>
+	
+
+</body>
+</html>

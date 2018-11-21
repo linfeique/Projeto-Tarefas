@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Senai.Cadastro.Tarefas.Models;
@@ -39,14 +40,14 @@ namespace Senai.Cadastro.Tarefas.Controllers {
 
         [HttpGet]
 
-        public IActionResult Login () => View ();
+        public IActionResult Logar () => View ();
 
         [HttpPost]
 
-        public IActionResult Login (IFormCollection form) {
+        public IActionResult Logar (IFormCollection form) {
             UsuarioModel usuario = new UsuarioModel {
-                Email = form["email"],
-                Senha = form["senha"]
+                Email = form["email_login"],
+                Senha = form["senha_login"]
             };
 
             UsuarioRepositorio usuarioRap = new UsuarioRepositorio ();
@@ -54,9 +55,12 @@ namespace Senai.Cadastro.Tarefas.Controllers {
 
             if (usuarioModel != null) {
                 HttpContext.Session.SetString ("idUsuario", usuarioModel.Id.ToString ());
-                return RedirectToAction("Cadastrar", "Tarefa");
+                return RedirectToAction ("Cadastrar", "Tarefa");
             } else {
-                return ViewBag.Mensagem = "Acesso Negado";
+                // StringBuilder str = new StringBuilder ();
+                // str.Append("<script>mostarAlerta() ; </script>");
+                // Response.WriteAsync(str.ToString());
+                return null;
             }
         }
     }
